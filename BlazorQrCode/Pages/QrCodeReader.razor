@@ -1,0 +1,39 @@
+﻿@page "/"
+@using System.Collections.Generic;
+@using System;
+
+<button class="btn btn-sm btn-light"
+        type="button"
+        @onclick="(() => ShowScanBarcode = !ShowScanBarcode)">
+
+        Ler QrCode
+</button>
+<input type="text" class="form-control" style="min-width: 100px;"
+        @bind-value="BarCode"
+        placeholder="Código"/>
+
+<br/>
+
+@if (ShowScanBarcode)
+{
+    <BarcodeReader ScanResult="((e) => { BarCode = e; ShowScanBarcode = !ShowScanBarcode;})"
+                   ShowScanBarcode="ShowScanBarcode"
+                   Close="(()=>ShowScanBarcode=!ShowScanBarcode)"
+                   ScanBtnTitle="Scan"
+                   ResetBtnTitle="Reset"
+                   CloseBtnTitle="Close"
+                   SelectDeviceBtnTitle="Select Device"/>
+}
+
+@code{
+    /// <summary>
+    /// Exibe a janela para ler o código
+    /// </summary>
+    bool ShowScanBarcode { get; set; } = false;
+
+
+    /// <summary>
+    /// Armazena o código
+    /// </summary>
+    public string? BarCode { get; set; }
+}
